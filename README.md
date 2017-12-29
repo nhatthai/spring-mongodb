@@ -3,9 +3,9 @@ Write restful api and connect MongoDb
 
 
 # Requirements
-Install mongodb on local or using docker
-Java: JDK 1.8
-Maven Build
+    Install mongodb on local or using docker
+    Java: JDK 1.8
+    Maven Build
 
 
 # MongoDB
