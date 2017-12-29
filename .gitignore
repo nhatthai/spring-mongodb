@@ -1,5 +1,8 @@
 .settings
 .project
 
+# MongoDB
+data/db
+
 # Maven
 target/
