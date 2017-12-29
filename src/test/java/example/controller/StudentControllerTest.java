@@ -1,7 +1,5 @@
 package example.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,12 +9,14 @@ import static org.junit.Assert.assertEquals;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.context.embedded.LocalServerPort;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -30,16 +30,12 @@ public class StudentControllerTest {
     @Autowired
     private TestRestTemplate restTestTemplate;
 
-    private ObjectMapper objectMapper;
-
     @Before
     public void setUp() throws Exception{
-        objectMapper = new ObjectMapper();
     }
 
     @After
     public void tearDown() throws Exception{
-        objectMapper = null;
     }
 
     @LocalServerPort
@@ -72,8 +68,10 @@ public class StudentControllerTest {
 
 	@Test
 	public void testGetStudents() {
-        ResponseEntity<List> responseEntity = restTestTemplate.getForEntity(
-            "http://localhost:" + port + "/students", List.class);
+        ResponseEntity<List<Student>> responseEntity = restTestTemplate.exchange(
+            "http://localhost:" + port + "/students",
+            HttpMethod.GET, null, new ParameterizedTypeReference<List<Student>>() {
+        });
         assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
 
         System.out.println("List Response");
@@ -84,9 +82,11 @@ public class StudentControllerTest {
     }
 
     @Test
-	public void testGetStudentsByName() {
-        ResponseEntity<List> responseEntity = restTestTemplate.getForEntity(
-            "http://localhost:" + port + "/students?name=Nhat", List.class);
+	public <E> void testGetStudentsByName() {
+        ResponseEntity<List<Student>> responseEntity = restTestTemplate.exchange(
+            "http://localhost:" + port + "/students?name=Nhat",
+            HttpMethod.GET, null, new ParameterizedTypeReference<List<Student>>() {
+        });
         assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
 
         System.out.println("List Response");
@@ -96,4 +96,19 @@ public class StudentControllerTest {
         assertEquals(students.size(), 1);
     }
 
+    @Test
+    public void testGetStudentPageByName() {
+        ResponseEntity<List<Student>> responseEntity = restTestTemplate.exchange(
+            "http://localhost:" + port + "/students/page?name=Nhat Thai",
+            HttpMethod.GET, null, new ParameterizedTypeReference<List<Student>>() {
+        });
+        assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
+
+        System.out.println("List Response");
+        System.out.println(responseEntity);
+        List<Student> students = responseEntity.getBody();
+
+        System.out.println(students);
+        assertEquals(students.size(), 1);
+    }
 }

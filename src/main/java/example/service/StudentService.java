@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-// import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import example.model.Student;
@@ -14,8 +14,6 @@ import example.repository.StudentRepository;
 
 @Service
 public class StudentService {
-    // private final static int PAGESIZE = 3;
-
 	@Autowired
     StudentRepository repository;
 
@@ -38,4 +36,9 @@ public class StudentService {
 	public List<Student> findFirst10ByName(String name) {
 		return repository.findFirst10ByName(name);
 	}
+
+	public Page<Student> findByName(String name, PageRequest pageRequest) {
+        return repository.findByName(name, pageRequest);
+	}
+
 }
