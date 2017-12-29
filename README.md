@@ -1,19 +1,19 @@
-### Spring and MongoDB
+# Spring and MongoDB
 ----------------------
 Write restful api and connect MongoDb
 
 
-### Requirements
+# Requirements
 ----------------
 Install mongodb on local or using docker
 Java: JDK 1.8
 Maven Build
 
 
-### MongoDB
+# MongoDB
 -----------
 
-# Install mongodb on local
+### Install mongodb on local
 
 Install on Mac OS X machine with homebrew
 ```
@@ -25,7 +25,7 @@ Start MongoDb server
 $ mongod
 ```
 
-# Install mongodb on docker
+### Install mongodb on docker
 
 ```
 docker-compose up
@@ -44,6 +44,6 @@ mongo 127.0.0.1:27017
 Check config mongodb
 src/main/resource/application.properties
 
-### Integration Tests
+# Integration Tests
 ---------------------
 An integration test based on Spring's RestTemplate
