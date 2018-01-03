@@ -10,7 +10,6 @@
 
 # MongoDB
 
-
 ### Install mongodb on local
 
 Install on Mac OS X machine with homebrew
@@ -43,5 +42,4 @@ Check config mongodb
 src/main/resource/application.properties
 
 # Integration Tests
-
 An integration test based on Spring's RestTemplate
